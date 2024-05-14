@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+char lookahead;
+
+void match(char expected) {
+    if (lookahead == expected)
+        lookahead = getchar();
+}
+
+void expression();
+void term();
+void factor();
+
+void expression() {
+    term();
+    while (lookahead == '+' || lookahead == '-') {
+        char op = lookahead;
+        match(op);
+        term();
+        if (op == '+')
+            printf("ADD\n");
+        else if (op == '-')
+            printf("SUB\n");
+    }
+}
+
+void term() {
+    factor();
+    while (lookahead == '*' || lookahead == '/') {
+        char op = lookahead;
+        match(op);
+        factor();
+        if (op == '*')
+            printf("MUL\n");
+        else if (op == '/')
+            printf("DIV\n");
+    }
+}
+
+void factor() {
+    if (isdigit(lookahead)) {
+        printf("PUSH %c\n", lookahead);
+        match(lookahead);
+    } else if (lookahead == '(') {
+        match('(');
+        expression();
+        match(')');
+    } 
+    }
+}
+
+int main() {
+    printf("Enter an arithmetic expression: ");
+    lookahead = getchar();
+    expression();
+    }
+    return 0;
+}
+
+
