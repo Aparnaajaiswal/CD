@@ -1,0 +1,20 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+string gifc(string cond, string act) {
+    string code;
+    code += "if (" + cond + ") {\n";
+    code += "\t" + act + "\n";
+    code += "}";
+    return code;
+}
+
+int main() {
+    string c = "x > 5";
+    string a = "y = x * 2;";
+    string gc = gifc(c, a);
+    cout << "Generated code:\n";
+    cout << gc << endl;
+    return 0;
+}
